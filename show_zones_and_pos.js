@@ -32,14 +32,16 @@ get_zones().then((zones) => {
 
 });
 
-let marker
+let marker;
+let lat;
+let lon;
 
 // navigator.geolocation.getCurrentPosition(success, error, options)
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
         const lat = position.coords.latitude;
-        const lon = position.coords.longitude
-        marker = L.marker([lat, lon])
+        const lon = position.coords.longitude;
+        marker = L.marker([lat, lon]);
         marker.addTo(map);
 
         map.panTo([lat, lon]);
@@ -49,8 +51,8 @@ if (navigator.geolocation) {
 
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude
+        lat = position.coords.latitude;
+        lon = position.coords.longitude
         map.removeLayer(marker)
         marker = L.marker([lat, lon])
         marker.addTo(map);
@@ -58,25 +60,11 @@ if (navigator.geolocation) {
     });
 }
 
+document.getElementById("button").onclick = function () {
 
-// var journeys = data.features
-// L.geoJSON(journeys, {
-//     style: {
-//         'color': 'coral',
-//         'weight': 1.5,
-//         'opacity': 0.3
-//     },
-//     onEachFeature: function (feature, layer) {
-//         layer.bindPopup(
-//             '<h1>' + feature.properties.person +
-//             '</h1><p>Description: ' + feature.properties.factoid +
-//             '</p><p>Note: ' + feature.properties.note +
-//             '</p><p>Year: ' + feature.properties.time +
-//             '</p><p>Distance: ' + feature.properties.length + ' km' +
-//             '</p><p>Matched Person Location: ' + feature.properties.person_matched_name +
-//             '</p><p>Matched Factoid Location: ' + feature.properties.matched_name +
-//             '</p>');
-//     }
-// }).addTo(map)
+
+    map.flyTo([lat, lon]);
+
+}
 
 
