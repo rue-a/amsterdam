@@ -38,14 +38,16 @@ get_zones().then((zones) => {
 
 });
 
-navigator.geolocation.getCurrentPosition(success, error, options)
+// navigator.geolocation.getCurrentPosition(success, error, options)
 
-navigator.geolocation.watchPosition(function (position) {
-    const lat = position.coords.latitude;
-    const lon = position.coords.longitude
-    L.marker([lat, lon]).addTo(map);
-    map.panTo([lat, lon], 14);
-});
+if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude
+        L.marker([lat, lon]).addTo(map);
+        map.panTo([lat, lon], 14);
+    });
+}
 
 
 // var journeys = data.features
