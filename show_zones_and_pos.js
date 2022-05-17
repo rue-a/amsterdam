@@ -1,7 +1,7 @@
 
 
 const map = L.map('map', {
-    zoom: 14,
+    zoom: 17,
     fullscreenControl: true,
     center: [52.377956, 4.897070],
 });
@@ -23,7 +23,12 @@ async function get_zones() {
 
 get_zones().then((zones) => {
     console.log(zones);
-    L.geoJSON(zones).addTo(map);
+    L.geoJSON(zones, {
+        style: {
+            'color': 'red',
+            'weight': 1.5,
+        }
+    }).addTo(map);
 
 });
 
@@ -46,9 +51,9 @@ if (navigator.geolocation) {
     navigator.geolocation.watchPosition(function (position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude
-        const marker = L.marker([lat, lon])
-        // map.removeLayer(marker)
-        // marker.addTo(map);
+        map.removeLayer(marker)
+        marker = L.marker([lat, lon])
+        marker.addTo(map);
 
     });
 }
@@ -75,4 +80,3 @@ if (navigator.geolocation) {
 // }).addTo(map)
 
 
-// 
