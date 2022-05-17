@@ -1,9 +1,37 @@
+// options for current position
+const navigatorLocationOptions = {
+    enableHighAccuracy: true,
+    timeout: 7000,
+    maximumAge: 0
+};
 
-if ("geolocation" in navigator) {
-    console.log("geolocation available");
-} else {
-    console.log("no geoloc");
-}
+// does browser have geo services enabled
+navigator.permissions.query({ name: 'geolocation' })
+    .then((result) => {
+
+        if (result.state === 'granted') {// you are good
+            navigator.geolocation.getCurrentPosition(position => {
+                console.log('granted user location permission', position);
+
+                //.. do your stuff
+
+            }, (error) => {
+                // OS services are not enabled
+                console.log('Please turn on OS located services', navigator);
+                errorLocation();
+            }, navigatorLocationOptions);
+
+        } else {
+            // browser issues seriveces
+            console.log('Browser location services disabled', navigator);
+            errorLocation();
+        }
+    }, (error) => {
+        /* Browser doesn't support querying for permissions */
+        console.log('Please turn on BROWSER location services', navigator);
+        errorLocation()
+    }
+    );
 
 
 const map = L.map('map', {
