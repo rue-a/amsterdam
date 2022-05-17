@@ -7,7 +7,9 @@ const map = L.map('map', {
 });
 
 var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 22,
+    maxNativeZoom: 19
 }).addTo(map);
 
 osmLayer.addTo(map);
@@ -56,15 +58,11 @@ if (navigator.geolocation) {
         map.removeLayer(marker)
         marker = L.marker([lat, lon])
         marker.addTo(map);
-
     });
 }
 
 document.getElementById("button").onclick = function () {
-
-
     map.flyTo([lat, lon]);
-
 }
 
 
