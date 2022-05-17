@@ -27,17 +27,29 @@ get_zones().then((zones) => {
 
 });
 
+let marker
+
 // navigator.geolocation.getCurrentPosition(success, error, options)
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude
+        marker = L.marker([lat, lon])
+        marker.addTo(map);
+
+        map.panTo([lat, lon]);
+    });
+}
+
 
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(function (position) {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude
         const marker = L.marker([lat, lon])
-        map.removeLayer(marker)
-        marker.addTo(map);
-        
-        map.panTo([lat, lon]);
+        // map.removeLayer(marker)
+        // marker.addTo(map);
+
     });
 }
 
