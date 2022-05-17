@@ -1,37 +1,3 @@
-// options for current position
-const navigatorLocationOptions = {
-    enableHighAccuracy: true,
-    timeout: 7000,
-    maximumAge: 0
-};
-
-// does browser have geo services enabled
-navigator.permissions.query({ name: 'geolocation' })
-    .then((result) => {
-
-        if (result.state === 'granted') {// you are good
-            navigator.geolocation.getCurrentPosition(position => {
-                console.log('granted user location permission', position);
-
-                //.. do your stuff
-
-            }, (error) => {
-                // OS services are not enabled
-                console.log('Please turn on OS located services', navigator);
-                errorLocation();
-            }, navigatorLocationOptions);
-
-        } else {
-            // browser issues seriveces
-            console.log('Browser location services disabled', navigator);
-            errorLocation();
-        }
-    }, (error) => {
-        /* Browser doesn't support querying for permissions */
-        console.log('Please turn on BROWSER location services', navigator);
-        errorLocation()
-    }
-    );
 
 
 const map = L.map('map', {
@@ -71,6 +37,8 @@ get_zones().then((zones) => {
     Stamen_TonerLabels.addTo(map, { opacity: 0.5 });
 
 });
+
+navigator.geolocation.getCurrentPosition(success, error, options)
 
 navigator.geolocation.watchPosition(function (position) {
     const lat = position.coords.latitude;
