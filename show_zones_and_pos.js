@@ -4,7 +4,7 @@ let lon;
 
 async function get_zones() {
     // pull restricted zones from data portal amsterdam
-    const query = "https://api.data.amsterdam.nl/v1/overlastgebieden/alcoholverbod/?_format=geojson"
+    const query = "https://api.data.amsterdam.nl/v1/overlastgebieden/alcoholverbod/?_format=geojson";
     const response = await fetch(query);
     return response.json();
 }
@@ -36,8 +36,8 @@ get_zones().then((zones) => {
 // pan to current location and add a marker
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function (position) {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
+        lat = position.coords.latitude;
+        lon = position.coords.longitude;
         marker = L.marker([lat, lon]);
         marker.addTo(map);
         map.panTo([lat, lon]);
@@ -48,9 +48,9 @@ if (navigator.geolocation) {
 if (navigator.geolocation) {
     navigator.geolocation.watchPosition(function (position) {
         lat = position.coords.latitude;
-        lon = position.coords.longitude
-        map.removeLayer(marker)
-        marker = L.marker([lat, lon])
+        lon = position.coords.longitude;
+        map.removeLayer(marker);
+        marker = L.marker([lat, lon]);
         marker.addTo(map);
     });
 }
